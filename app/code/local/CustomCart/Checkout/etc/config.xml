@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Custom_Checkout>
+      <version>1.0</version>
+    </Custom_Checkout>
+  </modules>
+ 
+  <frontend>
+    <routers>
+      <checkout>
+        <args>
+          <modules>
+            <Custom_Checkout before="Mage_Catalog">Custom_Checkout</Custom_Checkout>
+          </modules>
+        </args>
+      </checkout>
+    </routers>
+  </frontend>
+</config>
