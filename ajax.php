@@ -32,21 +32,9 @@ foreach ($items as $item) {   // LOOP
 // (UPDATE THE TOTALS)
 
 
-/*echo '<script type="text/javascript">';
-echo 'function updateTotalG(){';
-echo 'jQuery("#shopping-cart-totals-table").html(\'';
-echo '<strong><span>';
-//echo 'JQuery(\'#sveUkupno\').html("<strong><span>';
-if($store=='en')  echo $simbol;
-echo number_format(Mage::getSingleton('checkout/session')->getQuote()->getGrandTotal(),2);
-//echo $simbol . ' </span></strong>");';
-if($store=='hr')  echo ' '.$simbol;
-echo " </span></strong>');";
-echo '}   </script>';
-*/
-
 echo '<script type="text/javascript">';
 echo 'function updateTotalG(){';
+//echo 'jQuery("#count_mini_cart").html(parseInt(jQuery("#count_mini_cart").html())+1);';
 echo 'jQuery("#shopping-cart-totals-table .price").html(\'';
 if($store!='hr')  
 	echo $simbol;

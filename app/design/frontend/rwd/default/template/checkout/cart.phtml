@@ -34,47 +34,61 @@
 <script type="text/javascript">
 
 jQuery(document).ready(function(){
-    //jQuery(".product-cart-actions").prepend('<input type="hidden" value="" id="cantidad" class="cantidad" />');
+    jQuery(".product-cart-actions").prepend('<input type="hidden" value="" id="cantidad" class="cantidad" />');
 
-    jQuery(".product-cart-actions").prepend('<input type="button" value="-" id="minus1" class="minus" />');
-    jQuery(".product-cart-actions .qty").after('<input type="button" value="+" id="add1" class="plus" />');
+    //jQuery(".product-cart-actions").prepend('<input type="button" value="-" id="minus1" class="minus" />');
+    //jQuery(".product-cart-actions .qty").after('<input type="button" value="+" id="add1" class="plus" />');
 
-jQuery(".plus").click(function(){
-    var currentVal = parseInt(jQuery(this).prev('.qty').val());
-    if (!currentVal || currentVal=="" || currentVal == "NaN") 
-        currentVal = 0;
-    jQuery(this).prev(".qty").val(currentVal + 1);
-    jQuery('[id="cantidad"]').val(currentVal + 1);
-    //alert(jQuery('[class="price"]').text());
-    //alert( jQuery(this).parent().next().filter('.price').text());
-    /*alert(currentVal+1);
-    alert(jQuery(this).prev().prev().prev().val());//-
-    alert(jQuery(this).prev().prev().val());//cantidad
-    alert(jQuery(this).prev().val());//cantidad
-    alert(jQuery(this).next().val());//update_qty
-    alert(jQuery(this).next().next().val());//vacio
-    alert(jQuery(this).next().next().next().val());//undefined
-    alert(jQuery(this).next().next().next().next().val());//undefined
-    alert(jQuery(this).next().next().next().next().next().val());//undefined
-    alert(jQuery(this).next().next().next().next().next().next().val());//undefined
-    alert(jQuery(this).next().next().next().next().next().next().next().val());//undefined
-    alert(jQuery(this).next().next().next().next().next().next().next().next().val());*/
-    jQuery("#products-table-basket").submit();
-    //$("products-table-basket").submit();
-    jQuery(this).siblings('.btn-update').css('display','block');
-});
-jQuery(".minus").click(function()
-{
-    var currentVal = parseInt(jQuery(this).next(".qty").val());
-    if (currentVal == "NaN") 
-        currentVal = 0;
-        if (currentVal > 0){
-            jQuery(this).next(".qty").val(currentVal - 1);
-        }
-        jQuery('.btn-update').css('display','block');
-    });
+    
 });
 </script>
+ <script  type = "text/javascript" > 
+    
+    function minusProduct(item){
+        var currentVal = parseInt(jQuery('[id="cart['+item+'][qty]"]').val());
+        if (currentVal == "NaN") 
+            currentVal = 0;
+        if (currentVal > 1){
+            jQuery('[id="cart['+item+'][qty]"]').val(currentVal - 1);
+            jQuery("#count_mini_cart").html(parseInt(jQuery("#count_mini_cart").html() ) -1 );
+        }
+        gaussPost(item);
+    }
+    function addProduct(item){
+        var currentVal = parseInt(jQuery('[id="cart['+item+'][qty]"]').val());
+        if (!currentVal || currentVal=="" || currentVal == "NaN") 
+            currentVal = 0;
+        jQuery('[id="cart['+item+'][qty]"]').val(currentVal + 1);
+        jQuery("#count_mini_cart").html(parseInt(jQuery("#count_mini_cart").html())+1);
+        gaussPost(item);
+    }
+    function gaussPost ( item ) { 
+        element = 'cart['   +   item   + '][qty]' ; 
+        id = item ; 
+        idzamjenjanje = 'span-' + item ; 
+        qty = document . getElementById ( element ) . value ; 
+        jQuery . post ( "http://prueba3.local/ajax.php" ,   { 
+        //jQuery . post ( "<?php echo  Mage::getUrl('checkout/customcart/ajaxupdatecart'); ?>",   { 
+            item :   item , 
+            qty :   qty , 
+ 
+        } ,   function ( response ) { 
+            finishAjax ( id ,   escape ( response ) ) ; 
+        } ) ; 
+        return   false ; 
+        
+    } 
+ 
+    function   finishAjax ( id ,   response ) { 
+        //console.log(id);
+        //console.log(response);
+        jQuery ( '#subprice-' + id ) . html ( "$" + unescape ( response ) ) ; 
+        //jQuery ( '#span-' + id ) . html ( unescape ( response ) ) ; 
+        jQuery ( '#' + id ) . fadeIn ( ) ; 
+        updateTotalG ( ) ; 
+    }
+
+ </script> 
 <?php $_priceDisplay = ($this->helper('tax')->displayCartBothPrices()) ? 'display-both-prices' : 'display-single-price'; ?>
 
 <div class="cart <?php echo $_priceDisplay; ?>">
@@ -118,7 +132,7 @@ jQuery(".minus").click(function()
                                 <span class="nobr"><?php echo $this->__('Price') ?></span>
                             </div>
                             
-                    </th>vffcvv
+                    </th>
 
                     <th rowspan="<?php echo $mergedCells; ?>" class="a-center">
                         <?php echo $this->__('Qty') ?>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <dinamic_customcheckout>
+            <version>0.0.1</version>
+        </dinamic_customcheckout>
+    </modules>
+    <frontend>
+        <routers>
+            <customcheckout>
+                <use>standard</use>
+                <args>
+                    <module>Dinamic_Customcheckout</module>
+                    <frontName>customcheckout</frontName>
+                </args>
+            </customcheckout>
+        </routers>  
+    </frontend>
+</config>

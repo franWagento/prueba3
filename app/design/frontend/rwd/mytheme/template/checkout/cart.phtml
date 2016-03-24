@@ -48,9 +48,10 @@ jQuery(document).ready(function(){
         var currentVal = parseInt(jQuery('[id="cart['+item+'][qty]"]').val());
         if (currentVal == "NaN") 
             currentVal = 0;
-        if (currentVal > 1)
+        if (currentVal > 1){
             jQuery('[id="cart['+item+'][qty]"]').val(currentVal - 1);
-        
+            jQuery("#count_mini_cart").html(parseInt(jQuery("#count_mini_cart").html() ) -1 );
+        }
         gaussPost(item);
     }
     function addProduct(item){
@@ -58,6 +59,7 @@ jQuery(document).ready(function(){
         if (!currentVal || currentVal=="" || currentVal == "NaN") 
             currentVal = 0;
         jQuery('[id="cart['+item+'][qty]"]').val(currentVal + 1);
+        jQuery("#count_mini_cart").html(parseInt(jQuery("#count_mini_cart").html())+1);
         gaussPost(item);
     }
     function gaussPost ( item ) { 
@@ -65,8 +67,8 @@ jQuery(document).ready(function(){
         id = item ; 
         idzamjenjanje = 'span-' + item ; 
         qty = document . getElementById ( element ) . value ; 
-        jQuery . post ( "http://prueba3.local/ajax.php" ,   { 
-        //jQuery . post ( "<?php echo  Mage::getUrl('checkout/cart'); ?>",   { 
+        //jQuery . post ( "http://prueba3.local/ajax.php" ,   { 
+        jQuery . post ( "<?php echo  Mage::getUrl('customcheckout/customcart/ajaxupdatecart'); ?>",   { 
             item :   item , 
             qty :   qty , 
  
@@ -164,7 +166,7 @@ jQuery(document).ready(function(){
                     <td colspan="50" class="a-right cart-footer-actions">
 
                         <!-- Make this button the first responder rather than empty cart -->
-                        --<button type="submit" style="visibility:hidden;" data-cart-item-update name="update_cart_action" value="update_qty" title="<?php echo $this->quoteEscape($this->__('Update Shopping Cart')); ?>" class="button2 btn-update"><span><span><?php echo $this->__('Update Shopping Cart'); ?></span></span></button>
+                        <button type="submit" style="visibility:hidden;" data-cart-item-update name="update_cart_action" value="update_qty" title="<?php echo $this->quoteEscape($this->__('Update Shopping Cart')); ?>" class="button2 btn-update"><span><span><?php echo $this->__('Update Shopping Cart'); ?></span></span></button>
 
                         <button type="submit" name="update_cart_action" data-cart-empty value="empty_cart" title="<?php echo $this->quoteEscape($this->__('Empty Cart')); ?>" class="button2 btn-empty" id="empty_cart_button"><span><span><?php echo $this->__('Empty Cart'); ?></span></span></button>
 
